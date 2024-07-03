@@ -2,8 +2,8 @@ const { collegesPool } = require('../config/dbconfig');
 //const bcrypt = require('bcrypt');
 
 const teacherLogin = async (req, res) => {
-    const { teacher_code, tpassword } = req.body;
-    const { college_code } = req.query;
+    const { teacher_code, tpassword,college_code} = req.body;
+    //const { college_code } = req.query;
 
     if (!teacher_code || !tpassword || !college_code) {
         return res.status(400).json({ error: 'teacherID, college_code, and password are required parameters' });
