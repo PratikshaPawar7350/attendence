@@ -1,8 +1,8 @@
 const { collegesPool } = require('../config/dbconfig');
 
 const subjectlistclassteacher = async (req, res) => {
-    const { standard, division, teacher_id, college_code } = req.query;
-    if (!standard || !division || !teacher_id || !college_code) {
+    const {  teacher_id, college_code } = req.query;
+    if ( !teacher_id || !college_code) {
         return res.status(400).json({ 
             error: 'Missing required query parameters: standard, division, teacher_id, college_code' 
         });
@@ -23,11 +23,10 @@ const subjectlistclassteacher = async (req, res) => {
             JOIN 
                 College co ON t.college_id = co.collegeID
             WHERE 
-                cl.standard = ? AND
-                cl.division = ? AND
+                
                 t.teacher_id = ? AND
                 co.college_code = ?
-        `, [standard, division, teacher_id, college_code]);
+        `, [ teacher_id, college_code]);
 
         res.json(rows);
     } catch (error) {
