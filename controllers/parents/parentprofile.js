@@ -49,7 +49,7 @@ const parentprofile = async (req, res) => {
             student_names: parent.student_names  // Include concatenated student names
         };
 
-        return res.status(200).json({ success: true, message: 'Successfully logged in', data: parentData });
+        return res.status(200).json({  data: parentData });
     } catch (error) {
         console.error('Error executing query:', error);
         return res.status(500).json({ error: 'Internal server error' });

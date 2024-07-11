@@ -10,7 +10,7 @@ const { subjectlistclassteacher } = require('../controllers/subjectlistclassteac
 
 const { teacherLogin } = require('../controllers/teacherLogin');
 const { loginStudent } = require('../controllers/studentlogin');
-
+const { profile } = require('../controllers/studentprofile');
 
 
 router.get('/teacher_profile',  teacherProfile);
@@ -18,6 +18,7 @@ router.get('/teacher_profile',  teacherProfile);
 router.post('/loginteacher',  teacherLogin);
 router.get('/subjectlist', subjectlistclassteacher);
 router.get('/students' ,studentList);
+router.get('/studentprofile' ,profile);
 router.post('/login', loginStudent);
 
 
