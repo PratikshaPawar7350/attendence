@@ -1,6 +1,6 @@
 const { collegesPool } = require('../config/dbconfig');
 
-const studentList = async (req, res) => {
+const studentlist = async (req, res) => {
   const { stand, division, college_code } = req.query;
 
   // Check if required parameters are present
@@ -52,5 +52,5 @@ const studentList = async (req, res) => {
 };
 
 module.exports = {
-  studentList
+  studentlist
 };
