@@ -34,7 +34,7 @@ const addReason = async (req, res) => {
         const [existingReason] = await connection.query(
             `SELECT ar.* 
              FROM addreason ar 
-             JOIN College c ON ar.college_id = c.collegeID
+             JOIN College c ON ar.college_id = c.ollegeID
              WHERE ar.student_id = ? AND ar.date = ? AND c.college_code = ?`,
             [student_id, date, college_code]
         );

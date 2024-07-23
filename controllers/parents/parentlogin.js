@@ -13,7 +13,12 @@ const parentlogin = async (req, res) => {
             SELECT 
                 p.parent_id,
                 p.parentname,
-                p.password
+                p.password,
+                p.address,
+                p.pmobile_no,
+                p.email,
+                p.profilephoto,
+                c.college_code
             FROM Parents p
             JOIN College c ON p.college_id = c.collegeID
             WHERE p.parent_id = ? AND c.college_code = ?
@@ -32,9 +37,17 @@ const parentlogin = async (req, res) => {
             return res.status(401).json({ error: 'Invalid password' });
         }
 
+        let base64ProfilePhoto = null;
+        if (parent.profilephoto) {
+            base64ProfilePhoto = parent.profilephoto.toString('base64').replace(/\n/g, '');
+        }
+
         const parentData = { 
             parent_id: parent.parent_id,
             parentname: parent.parentname,
+            pmobile_no: parent.pmobile_no,
+            profilephoto: base64ProfilePhoto,
+            address: parent.address
         };
 
         return res.status(200).json({ success: true, message: 'Successfully logged in', data: parentData });

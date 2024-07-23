@@ -8,7 +8,7 @@ const { studentlist } = require('../controllers/studentlist');
 const { subjectlistclassteacher } = require('../controllers/subjectlistclassteacher');
 const { insertAttendance, fetchStudentAttendance } = require('../controllers/teacher/insertattendence');
 const { addReason } = require('../controllers/teacher/addreason');
-
+const {fetchreason} = require('../controllers/teacher/fetchreason');
 const { attendencecount } = require('../controllers/teacher/attendencecount');
 const { teacherLogin } = require('../controllers/teacherLogin');
 const { loginStudent } = require('../controllers/studentlogin');
@@ -33,5 +33,6 @@ const { parentprofile } = require('../controllers/parents/parentprofile');
 router.get('/parentprofile', parentprofile);
 router.post('/parentlogin', parentlogin);
 router.post('/add-reason', addReason);
+router.get('/fetch_reason', fetchreason);
 
 module.exports = router;
