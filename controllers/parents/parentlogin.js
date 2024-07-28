@@ -47,7 +47,8 @@ const parentlogin = async (req, res) => {
             parentname: parent.parentname,
             pmobile_no: parent.pmobile_no,
             profilephoto: base64ProfilePhoto,
-            address: parent.address
+            address: parent.address,
+            college_code:parent.college_code
         };
 
         return res.status(200).json({ success: true, message: 'Successfully logged in', data: parentData });
