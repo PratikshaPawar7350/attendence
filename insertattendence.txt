@@ -1,0 +1,192 @@
+SHOW GRANTS FOR 'sql12722597'@'%';
+GRANT ALL PRIVILEGES ON freedb_college.* TO 'sql12722597'@'%';
+FLUSH PRIVILEGES;
+use sql12722597;
+
+CREATE TABLE `College` (
+  `CollegeID` int NOT NULL AUTO_INCREMENT,
+  `college_code` varchar(20) DEFAULT NULL,
+  `college_name` varchar(40) NOT NULL,
+  `college_link` varchar(40) NOT NULL,
+  PRIMARY KEY (`CollegeID`),
+  KEY `idx_College_code` (`college_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `College` (
+   `CollegeID` int NOT NULL AUTO_INCREMENT,
+   `college_code` varchar(20) DEFAULT NULL,
+   `college_name` varchar(40) NOT NULL,
+   `college_link` varchar(40) NOT NULL,
+   PRIMARY KEY (`CollegeID`),
+   KEY `idx_College_code` (`college_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `College` VALUES (1,'MGVP','MGVP,LONI','www.MGVP.com');
+
+CREATE TABLE `Student` (
+  `student_id` int NOT NULL AUTO_INCREMENT,
+  `studentid` varchar(40) DEFAULT NULL,
+  `profile_img` mediumblob,
+  `password` varchar(50) DEFAULT NULL,
+  `roll_no` varchar(20) DEFAULT NULL,
+  `std` varchar(10) DEFAULT NULL,
+  `Name` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `college_id` int DEFAULT NULL,
+  `parent_id` varchar(10) DEFAULT NULL,
+  `division` varchar(10) DEFAULT NULL,
+  `stud_dob` date DEFAULT NULL,
+  PRIMARY KEY (`student_id`),
+  KEY `college_id` (`college_id`),
+  KEY `idx_sid` (`studentid`),
+  KEY `idx_parent_id` (`parent_id`),
+  CONSTRAINT `Student_ibfk_2` FOREIGN KEY (`college_id`) REFERENCES `College` (`CollegeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `addreason` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `student_id` varchar(40) NOT NULL,
+  `college_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_college_id` FOREIGN KEY (`college_id`) REFERENCES `College` (`CollegeID`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `holidays` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `college_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_holidays_college_id` FOREIGN KEY (`college_id`) REFERENCES `College` (`CollegeID`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `holidays` (`date`, `description`, `college_id`) VALUES
+('2024-07-14', 'Independence Day', 1),
+('2024-12-25', 'Christmas Day', 1),
+('2024-01-01', 'New Year\'s Day', 1);
+
+CREATE TABLE `Classes` (
+  `class_id` int NOT NULL AUTO_INCREMENT,
+  `standard` varchar(50) NOT NULL,
+  `division` varchar(50) NOT NULL,
+  `college_id` int NOT NULL,
+  PRIMARY KEY (`class_id`),
+  KEY `college_id` (`college_id`),
+  CONSTRAINT `Classes_ibfk_1` FOREIGN KEY (`college_id`) REFERENCES `College` (`CollegeID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `Classes` VALUES (49,'10','B',1),(50,'10','A',1),(51,'10','C',1);
+
+CREATE TABLE `classteachers` (
+  `classteachers_id` int NOT NULL AUTO_INCREMENT,
+  `teacher_id` varchar(30) DEFAULT NULL,
+  `standard` varchar(50) DEFAULT NULL,
+  `division` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`classteachers_id`),
+  KEY `teacher_id` (`teacher_id`),
+  CONSTRAINT `classteachers_ibfk_1` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `teacher` (
+  `teacher_id` int NOT NULL AUTO_INCREMENT,
+  `teacher_code` varchar(20) DEFAULT NULL,
+  `tname` varchar(50) DEFAULT NULL,
+  `tpassword` varchar(50) DEFAULT NULL,
+  `mobileno` varchar(15) DEFAULT NULL,
+  `teacher_email` varchar(50) DEFAULT NULL,
+  `teacher_profile` blob,
+  `date_of_birth` date DEFAULT NULL,
+  `teacher_education` varchar(20) DEFAULT NULL,
+  `college_code` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`teacher_id`),
+  KEY `idx_teacher_code` (`teacher_code`),
+  KEY `fk_college_code` (`college_code`),
+  CONSTRAINT `fk_college_code` FOREIGN KEY (`college_code`) REFERENCES `College` (`college_code`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `teacher` VALUES (1,'T1','pawar','pp','785646636563','p@gmail.com',_binary 'PNG\r\n\Z\n\0\0\0\rIHDR\0\0\0E\0\0\0X\0\0\0£\Å:l\0\0\0	pHYs\0\0\0\0\0\0\0\0sRGB\0®\Î\é\0\0\0gAMA\0\0±üa\0\0[IDATx\í}LgÇ¿}\ã\ÝZD^TD \"2^\Æ\Â\Â\Â2C´\Ë`ñ5\ÆuousöN\ç\â\èAq33\Ê\"F7G\\tna\É\äM	8hii»»K4\íxZÛ³\ç\Ùóù\ë\Ý=\×\Þ}\î\îy~w\Ï\Ý#ðÈ´3PX \nM\î\É\Â2\ØL\ã#]WÍ£úC\Ì\èL²A`d¥\Â?\ìll\Öo\Æ-\çýs6«÷\Ú£¯uÏ§\Ì\è\çö\Z´?d¬À\Óø\Éµø#L»\rÀx\ëHQ\Ë\åª\Ã6\\\í0\ÕfKW\Ï~=Z®70Üq¸«2\Ù±Lt1ðÞ=#~>>\ç[Á\ß\ç´ú±Á«1ðJ&]e\Ò<B.±Y\ÍQ\Ì\à¾üË¤&Õf²R\Ò\àó\ØTÌ¿p`óþÌ¤L*c\Ñ~¦\Ò~$X©B°BO1[­ÿ ð\à\ãûã³\á;ö¤d\ÎÁw/½O¹cEþ\ÝQ\Å\ì\\\Ìx2i³\"÷SIÿ¦;H1*¹\çÅ\\\Ô\"\ÏzË\âo\Ís\ÒÙ!³À\Æ,&À\êÑ°YðÛ \Þ\í\ì¯hf!P\átÓK)\ïø7­Chh(\Ü!\î\äYXL\ÃPøMÇ³dl\àO,~uú\ß\Èq+KK´\Ý\Äò¨§y®¾`\ãÆ;Ì?\ìüÑ»!+ñ,x\ÑÎ½ø\ê\ï\Ý^\ÏÓ§O3Rj\\\æñ\Ú\Ú\ç\å\åa·^\Ý7E0ùgA8\Â]oZa\Z\ë\ÆÚ~¬r[»xuaýúõ8þ<nÝº\Å\\ús¯P(°p\ák\Ðj?xý8		Á5k\à\Ë\Ð*\0BJ!À[JGGt:\ê\ë\ë!5x´½½½HOOÁ``n\ÉPWW\ÇU\ÉR+W®pBX\Øj·©©i\ë×¯£¼¼bQUUðüü|\Ä\Æ\ÆrGL@@\0Ö®];%ORR=ú\"¼¤\ãò\å\Ë\\yH	\ÞÁ[LLÁJZ% RP)¨¼¥aÁX¹r%\Ìf3¤¯Ú§±±ûö\í\ã>wuu¡ºº\Z%%%y\Ð\Ð\Ð\0±\È\Í\Í\åB>ð266ö\Ä<\ì\Ñ3<<±0L\ÏV\ÊÒ¥K±u\ëV9r\Þ\n\n\n¦äÄ\r\àð.S<£\ÑÈJ|¯1Wªö?-B@«dT\n*\0o)l{\é\Ò%ô÷÷Cjð\Â\Æ\É\É\ÉX²d	-Z¶¶6H	^qÊ\Ð\Ý\Ý\Í}Ä3gê½+W\\\\±¨¬¬\äÝ\ÊKJFFT*\Õ\ãk´´©\ÍEGG\ã\èÑ£ðpOsv°\åImm-rrrÍ¤J¥\Òg:Þ·#³³³¹$EhLJ!@¥ RP){bmc~\Ô\Þ,ls.\ß[I\é\ì\ì\Äþýû!\ã÷¾`Rq\ì\Ø1ø\"´L!@¥ RP)¨T\n*`qJ__N8±(,,tû]¥ÿ#F­V±\n\âõö)`R\Øöd_)¨T\n*\0BJ!@¥ RP)J	+1>>©\á\ï\ï³\Õ\â2S)ó\Ô\è\é\é\Ô`\ßS\Z0¹\Þ\ÙN¥\Äj$)%!!\×F]\æq*%{F4\Z!5\Ôj5ñQ°º\èÁ©\ÊN\îñ-©§E\í\íkNç»¬}Æ ¦¦RcË-87qF\ë$q¾K)\Úð8\\¬>7n@J°§\Ðö½8\Ð\ÓLÿ\Ä8eGd\nön/\ÅÃ!%V¯^\rU~6ôÆ)I=QJò´XqWu\ËWI.n©\Ð\éP¼m\Û9\Ã\\nE´(Âûr!\Ø\Ç5t:ª´´ôkfô¸^R\ÙN\×MË2\äxóLT÷¶Â÷7Á\ÏO\ÄnÌ¼L{{;6o\Þ\Üg±Xöx$\åCf\ê\îuc\Ü2	_\Æ\Êlú¡­wF&\'*\í&?\àu7*\ï\Îõýþ\rØ¾#OÞ¾vRa?-S:Aq²I\ç@y}\ïtù\îJ¡\Æ[¦4\é´\ÙÞ´þ\à\Ð\ÑúQ\0\0\0\0IEND®B`','2000-06-06','MBA','MGVP');
+
+INSERT INTO `classteachers` VALUES (1,'T1','10','B');
+
+CREATE TABLE `Parents` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `parent_id` varchar(40) DEFAULT NULL,
+  `parentname` varchar(25) DEFAULT NULL,
+  `pmobile_no` varchar(15) DEFAULT NULL,
+  `password` varchar(20) DEFAULT NULL,
+  `profilephoto` blob,
+  `address` varchar(50) DEFAULT NULL,
+  `birth_date` date DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `college_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE_PARENT_ID` (`parent_id`),
+  KEY `idx_parent_id` (`parent_id`),
+  KEY `idx_college_id` (`college_id`),
+  CONSTRAINT `Parents_ibfk_1` FOREIGN KEY (`college_id`) REFERENCES `College` (`CollegeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `Parents` VALUES (1,'P001','John Doe','1234567890','password1','','123 Main St','1970-01-01','johndoe@example.com',1),(14,'P002','Jane Smith','0987654321','password2','','456 Elm St','1980-02-02','janesmith@example.com',1),(15,'P003','Robert Brown','1122334455','password3',NULL,'789 Oak St','1990-03-03','robertbrown@example.com',1);
+CREATE TABLE `Subject` (
+  `subject_code` int NOT NULL AUTO_INCREMENT,
+  `subject_name` varchar(255) NOT NULL,
+  `stand` varchar(10) NOT NULL,
+  `division` varchar(10) NOT NULL,
+  `subject_code_prefixed` varchar(20) DEFAULT NULL,
+  `image` blob,
+  PRIMARY KEY (`subject_code`),
+  KEY `idx_subject_code_prefixed` (`subject_code_prefixed`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `timetables` (
+  `timetables_id` int NOT NULL AUTO_INCREMENT,
+  `class_id` int NOT NULL,
+  `teacher_id` varchar(30) NOT NULL,
+  `scheduled_date` date NOT NULL,
+  `scheduled_time` time NOT NULL,
+  `college_id` int NOT NULL,
+  `subject_code` varchar(20) NOT NULL,
+  PRIMARY KEY (`timetables_id`),
+  KEY `class_id` (`class_id`),
+  KEY `teacher_id` (`teacher_id`),
+  KEY `college_id` (`college_id`),
+  KEY `subject_code` (`subject_code`),
+  CONSTRAINT `timetables_ibfk_1` FOREIGN KEY (`class_id`) REFERENCES `Classes` (`class_id`),
+  CONSTRAINT `timetables_ibfk_2` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_code`),
+  CONSTRAINT `timetables_ibfk_3` FOREIGN KEY (`college_id`) REFERENCES `College` (`CollegeID`),
+  CONSTRAINT `timetables_ibfk_4` FOREIGN KEY (`subject_code`) REFERENCES `Subject` (`subject_code_prefixed`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+//////////////////
+CREATE TABLE `Student` (
+  `student_id` int NOT NULL AUTO_INCREMENT,
+  `studentid` varchar(40) DEFAULT NULL,
+  `profile_img` blob,
+  `password` varchar(50) DEFAULT NULL,
+  `roll_no` varchar(20) DEFAULT NULL,
+  `std` varchar(10) DEFAULT NULL,
+  `Name` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `college_id` int DEFAULT NULL,
+  `parent_id` varchar(10) DEFAULT NULL,
+  `division` varchar(10) DEFAULT NULL,
+  `stud_dob` date DEFAULT NULL,
+  `fcm_token` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`student_id`),
+  KEY `college_id` (`college_id`),
+  KEY `idx_sid` (`studentid`),
+  KEY `idx_parent_id` (`parent_id`),
+  CONSTRAINT `Student_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `Parents` (`parent_id`),
+  CONSTRAINT `Student_ibfk_2` FOREIGN KEY (`college_id`) REFERENCES `College` (`CollegeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `addreason` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `student_id` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

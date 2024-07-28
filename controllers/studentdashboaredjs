@@ -1,0 +1,37 @@
+const { collegesPool } = require('../config/dbconfig');
+
+const studentdashboard = async (req, res) => {
+    try {
+        const { stand, division } = req.query;
+
+        if (!stand || !division) {
+            return res.status(400).json({ error: 'Stand and Division are required' });
+        }
+
+        const [results] = await collegesPool.query(`
+            SELECT subject_name, image 
+            FROM Subject 
+            WHERE stand = ? AND division = ?
+        `, [stand, division]);
+
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'No subjects found for the given stand and division' });
+        }
+
+        const subjects = results.map(subject => {
+            const base64Image = subject.image ? subject.image.toString('base64') : null;
+            // console.log(`Subject: ${subject.subject_name}, Image: ${base64Image ? 'Base64 image present' : 'No image'}`);
+             return {
+                subject_name: subject.subject_name,
+                image: base64Image
+            };
+        });
+
+        return res.status(200).json(subjects);
+    } catch (err) {
+        console.error('Error fetching subjects:', err);
+        return res.status(500).send('Internal server error');
+    }
+};
+
+module.exports = { studentdashboard };

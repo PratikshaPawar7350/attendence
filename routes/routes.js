@@ -14,13 +14,14 @@ const { teacherLogin } = require('../controllers/teacherLogin');
 const { loginStudent } = require('../controllers/studentlogin');
 const { profile } = require('../controllers/studentprofile');
 const { subjects } = require('../controllers/subjectlist');
-
+const {  studentdashboard} = require('../controllers/studentdashboaredjs');
 router.get('/teacher_profile', teacherProfile);
 
 router.post('/loginteacher', teacherLogin);
 router.get('/subjectlist', subjectlistclassteacher);
 router.get('/students', studentlist);
 router.get('/studentprofile', profile);
+router.get('/studentdashboard',  studentdashboard);
 router.post('/login', loginStudent);
 router.post('/insert', insertAttendance);
 router.get('/fetchattendance', fetchStudentAttendance);
